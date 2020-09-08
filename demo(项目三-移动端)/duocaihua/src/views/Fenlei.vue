@@ -47,8 +47,8 @@
                 <div>
                     <ul>
                         <!-- <li class="zblb" v-for="(item,k) of ProductsList" :key="k"  @click="go(k+1)" v-bind:class="{active:currentIndex == k}">     -->
-                        <li class="zblb" v-for="(item,k) of ProductsList" :key="k"  @click="go(k+1)" > 
-                            <span v-text="item.sname" ></span>
+                        <li class="zblb" v-for="(item,k) of ProductsList" :key="k"  :class="[currentIndex === k?'active':'']"  @click="go(k)" > 
+                            <span v-text="item.sname"></span>
                         </li>
                     </ul>
                 </div>
@@ -88,19 +88,21 @@ export default {
             ProductsList:[],
             proimglist:[],
             // url传参,默认被选定的产品类别
-            cid:'1',
+            cid:1,
             kw:'',
             isshow:false,
             n:0,
-            // currentIndex:'0'
+            currentIndex:0,
         }
     },
     methods:{
         // 点击商品分类列表将列表id传给url
-        go(cid){
-            console.log(cid);
-            this.$router.push(`/fenlei/${cid}`);  
-       },
+        go(k){
+            this.currentIndex = k;
+            //页数从0开始，但分类id是从1开始的
+            console.log(k+1);
+            this.$router.push(`/fenlei/${k+1}`);  
+        },
         getProductsList(){
             //获取产品分类信息
             this.axios.get('/pro/productslist').then(res=>{
@@ -196,7 +198,7 @@ export default {
     .hengpai li{font-size: 0.6rem;}
     .wzys{color: grey;}
     .spm{text-align: center;}
-    .zbdhl>div>ul>li span:hover{color: #ff6298;}
-    /* .active{color:#ff6298;} */
+    /* .zbdhl>div>ul>li span:hover{color: #ff6298;} */
+    .active{color:#ff6298;}
     .van-search3{margin-top: 1rem !important;}
 </style>

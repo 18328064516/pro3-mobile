@@ -10,11 +10,10 @@ export default new Vuex.Store({
     isLogin:sessionStorage.getItem('isLogin') || false,
     username:sessionStorage.getItem('username') || '',
 
-    // uname:'', 
     //组件一开始加载时，执行这个文件时，先从本地缓存把购物车数据拉下来，保存进全局
-    car:JSON.parse(localStorage.getItem('car')||'[]'),
+    //本地缓存没有数据时，需要返回一个空的数组，只要数组还有数组API，如果不写成空数组就会报错
+    car:JSON.parse(localStorage.getItem('cart')||'[]'),
 
-    // keyword:''
   },
   //在mutationts添加一个登录成功的方法，要修改state中isLogin变量的值为true
   mutations: {
@@ -28,7 +27,7 @@ export default new Vuex.Store({
       sessionStorage.clear();
       state.car=[]
     },
-    addToCar(state,goodsInfo){ //点击加入购物车，把商品保存到store的car上
+    addToCar(state,goodsInfo){ //点击加入购物车按钮后，把商品保存到store的car上
       let flag=false;//假设购物车中没有找到
       //如果购物车之前有商品，只需要更新数量，否则添加新的商品
       state.car.forEach(item => {
@@ -44,26 +43,23 @@ export default new Vuex.Store({
       }
       // console.log(state.car)
       //把car 存储到本地的localstorage里面
-      localStorage.setItem('car',JSON.stringify(state.car))
+      localStorage.setItem('cart',JSON.stringify(state.car))
     },
     
-    // setkeyword(state,item){
-    //   state.keyword=item;
-    // }
   },
   actions: {  //专门发起异步请求，负责从服务器拿数据
   },
   modules: {
   },
-  getters:{ 
-    //用来获取右上角加入购物车的数量，总数量c
-    getAllCount(state){
-      var c =0;
-      state.car.forEach(item=>{
-        c+=item.addCount;
-      })
-      return c;
-    }
+  getters:{ //相当于vue中的计算属性computed
+    //用来获取加入购物车的数量，总数量c
+    //  (state){
+    //   var c =0;
+    //   state.car.forEach(item=>{
+    //     c+=item.addCount;
+    //   })
+    //   return c;
+    // }
   }
 })
 

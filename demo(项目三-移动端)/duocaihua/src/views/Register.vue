@@ -13,7 +13,7 @@
     />
     <!-- 密码 -->
     <van-field
-      type="passwd"
+      type="password"
       label="密码"
       placeholder="请输入密码(必填)"
       v-model="passwd"
@@ -23,7 +23,7 @@
     />
     <!-- 确认密码 -->
     <van-field
-      type="passwd"
+      type="password"
       label="密码"
       placeholder="请输入确认密码(必填)"
       v-model="passwd2"

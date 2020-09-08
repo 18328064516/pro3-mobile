@@ -119,6 +119,7 @@ export default {
         this.isshow = true;   
       },
       join(lid){
+        //1.加入购物车前先判断是否已登录
         if(!this.$store.state.isLogin){
           this.$toast({
             message:"您需要先登录才能操作",
@@ -136,7 +137,7 @@ export default {
           });
           this.$router.push('/cart')
         };
-        //点击之后，把当前商品的所有信息都搜集起来
+        //2.定义一个变量，用于点击加购物车按钮后，把当前商品的所有信息都搜集起来
         let goodsInfo={
           lid:this.lid,
           simg:this.simg,
@@ -144,10 +145,10 @@ export default {
           price:this.price,
           addCount:this.count,
         }
-        //调用store中的mutaitions 来将商品加入购物车
+        //3.调用vuex中store里的mutaitions 来将商品加入购物车
         this.$store.commit('addToCar',goodsInfo);
         console.log(goodsInfo)
-      },
+      }, 
     },
     created(){
       this.getProleibie();
